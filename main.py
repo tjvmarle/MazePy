@@ -1,7 +1,7 @@
 import pygame
-import init
 import time
 import Visuals.grid
+from Logic.MainScreen import MainScreen
 
 # TODO
 # Construct grid / grid logic for given x / y
@@ -12,11 +12,25 @@ import Visuals.grid
 #
 #
 
-screen = init.initPygame()
-x, y = screen.get_size()
-grid = Visuals.grid.drawGrid(screen)
+loopGo = True
+mainScreen = MainScreen((1280, 720))
 
-screen.blit(grid, (int(x * 0.05), int(y * 0.05)))
-pygame.display.update()
+while loopGo:
 
-time.sleep(1.5)
+    loopGo = mainScreen.Tick()
+
+    events = pygame.event.get()
+    for event in events:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                loopGo = False
+
+    # screen = init.initPygame()
+    # x, y = screen.get_size()
+    # grid = Visuals.grid.drawGrid(screen)
+
+    # screen.blit(grid, (int(x * 0.05), int(y * 0.05)))
+    # pygame.display.update()
+
+    # time.sleep(1.5)
+    # loopGo = False
