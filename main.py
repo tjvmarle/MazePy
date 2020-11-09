@@ -1,6 +1,6 @@
 import pygame
 import time
-import Visuals.grid
+import Visuals.Grid
 from Logic.MainScreen import MainScreen
 
 # TODO

@@ -1,4 +1,5 @@
 import pygame
+from Logic.Maze import Maze
 
 
 class MainScreen:
@@ -13,6 +14,11 @@ class MainScreen:
         self.mainScreen = pygame.display.set_mode(screen_size)
         self.mainScreen.fill((55, 55, 55))
         self.screenList = []
+        maze_x, maze_y = screen_size
+        self.maze = Maze((int(maze_x * 0.9), int(maze_y * 0.9)))
+
+        self.mainScreen.blit(self.maze.mazeScreen,
+                             (int(maze_x * 0.05), int(maze_y * 0.05)))
         pygame.display.update()
         return
 
