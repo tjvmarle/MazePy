@@ -11,24 +11,17 @@ class MainScreen:
         pygame.init()
         pygame.display.set_caption("A maze ing")
 
-        self.mainScreen = pygame.display.set_mode(screen_size)
+        self.mainScreen = pygame.display.set_mode(
+            screen_size)  # Primary screen
         self.mainScreen.fill((55, 55, 55))
-        self.screenList = []
-        maze_x, maze_y = screen_size
-        self.maze = Maze((int(maze_x * 0.9), int(maze_y * 0.9)))
-
-        self.mainScreen.blit(self.maze.mazeScreen,
-                             (int(maze_x * 0.05), int(maze_y * 0.05)))
-        pygame.display.update()
+        mazeX, mazeY = screen_size
+        self.maze = Maze((int(mazeX * 0.9), int(mazeY * 0.9)))
         return
 
-    def AddScreen(self, newScreen):
-        self.screenList.append(newScreen)
-        pass
-
     def Tick(self):
-        for screen in self.screenList:
-            screen.drawAll()
+        screenX, screenY = self.mainScreen.get_size()
+        self.mainScreen.blit(self.maze.draw(),
+                             (int(screenX * 0.05), int(screenY * 0.05)))
 
         pygame.display.update()
-        return True
+        return
