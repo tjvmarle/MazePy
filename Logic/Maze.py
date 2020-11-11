@@ -11,31 +11,33 @@ class Maze:
             for cell in col:
                 cell_x, cell_y = cell.pos
 
+                dbg = True if cell_x > 10 else False
+
                 # First/last column
                 setRight = True
-                setBot = True
                 if cell_x == 0:
-                    cell.lWall = MazeWall(True)
+                    cell.leftWall = MazeWall(True)
                 elif cell_x == len(cellList) - 1:
-                    cell.rWall = MazeWall(True)
+                    cell.rightWall = MazeWall(True)
                     setRight = False
 
                 # First/last row
+                setBot = True
                 if cell_y == 0:
-                    cell.tWall = MazeWall(True)
+                    cell.topWall = MazeWall(True)
                 elif cell_y == len(col) - 1:
-                    cell.bWall = MazeWall(True)
+                    cell.botWall = MazeWall(True)
                     setBot = False
 
                 # Only set right/bottom neighbours, should cover all cells
                 if setRight:
                     sharedVertWall = MazeWall()
-                    cell.rWall = sharedVertWall
-                    cellList[cell_x + 1][cell_y].lWall = sharedVertWall
+                    cell.rightWall = sharedVertWall
+                    cellList[cell_x + 1][cell_y].leftWall = sharedVertWall
                 if setBot:
                     sharedHorWall = MazeWall()
-                    cell.bWall = sharedHorWall
-                    cellList[cell_x][cell_y + 1].tWall = sharedHorWall
+                    cell.botWall = sharedHorWall
+                    cellList[cell_x][cell_y + 1].topWall = sharedHorWall
         return
 
     def initCells(self, mazeSize):

@@ -2,17 +2,12 @@ import pygame
 import time
 
 from pygame import init
-import Visuals.Grid
 from Logic.MainScreen import MainScreen
 
 # TODO
-# Construct grid / grid logic for given x / y
-# Create visuals for cells and open walls
-# Clean up the quick-and-dirty first setup
-# w: 48, h: 27
-#
-#
-#
+# Create maze edge
+# Create entrance/exit
+# Start working on generator
 
 loopGo = True
 mainScreen = MainScreen((1280, 720))
