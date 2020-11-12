@@ -1,9 +1,18 @@
-from Logic.MazeCell import MazeCell
 import pygame
+import random
+from Logic.MazeCell import MazeCell
+from Logic.MazeCell import Aim
 from Logic.MazeWall import MazeWall
 
 
 class Maze:
+
+    def initBeginEnd(self):
+        start = random.randrange(0, len(self.cellList))
+        end = random.randrange(0, len(self.cellList))
+
+        self.cellList[start][0].topWall.open()
+        self.cellList[end][len(self.cellList[0]) - 1].botWall.open()
 
     def initWalls(self, cellList):
 
@@ -16,28 +25,27 @@ class Maze:
                 # First/last column
                 setRight = True
                 if cell_x == 0:
-                    cell.leftWall = MazeWall(True)
+                    cell.addWall(Aim.Left, True)
                 elif cell_x == len(cellList) - 1:
-                    cell.rightWall = MazeWall(True)
+                    cell.addWall(Aim.Right, True)
                     setRight = False
 
                 # First/last row
                 setBot = True
                 if cell_y == 0:
-                    cell.topWall = MazeWall(True)
+                    cell.addWall(Aim.Top, True)
                 elif cell_y == len(col) - 1:
-                    cell.botWall = MazeWall(True)
+                    cell.addWall(Aim.Bottom, True)
                     setBot = False
 
                 # Only set right/bottom neighbours, should cover all cells
                 if setRight:
-                    sharedVertWall = MazeWall()
-                    cell.rightWall = sharedVertWall
-                    cellList[cell_x + 1][cell_y].leftWall = sharedVertWall
+                    cellList[cell_x + 1][cell_y].leftWall = cell.rightWall
+                    cell.addWall(Aim.Right)
+
                 if setBot:
-                    sharedHorWall = MazeWall()
-                    cell.botWall = sharedHorWall
-                    cellList[cell_x][cell_y + 1].topWall = sharedHorWall
+                    cell.addWall(Aim.Bottom)
+                    cellList[cell_x][cell_y + 1].topWall = cell.botWall
         return
 
     def initCells(self, mazeSize):
@@ -63,11 +71,15 @@ class Maze:
         self.CELL_SIZE = 24
         self.mazeScreen = pygame.Surface(screen_size)
         self.mazeScreen.fill((200, 200, 200))
+        pygame.draw.rect(self.mazeScreen, (10, 10, 10),
+                         ((0, 0), (self.mazeScreen.get_size())), 3)
 
         screenX, screenY = screen_size
         mazeSize = (int(screenX / self.CELL_SIZE),
                     int(screenY / self.CELL_SIZE))
         self.cellList = self.initCells(mazeSize)
+        self.initBeginEnd()
+
         return
 
     def draw(self):
