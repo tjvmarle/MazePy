@@ -1,5 +1,6 @@
 import pygame
 from Logic.Maze import Maze
+from Logic.MazeGen import MazeGen
 
 
 class MainScreen:
@@ -16,6 +17,8 @@ class MainScreen:
         self.mainScreen.fill((55, 55, 55))
         mazeX, mazeY = screen_size
         self.maze = Maze((int(mazeX * 0.9), int(mazeY * 0.9)))
+
+        self.mazeGen = MazeGen(self.maze)
         return
 
     def Tick(self):
