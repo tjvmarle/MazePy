@@ -85,8 +85,11 @@ class Maze:
 
     def open(self, cellPos, aim):
         xPos, yPos = cellPos
+        self.cellList[xPos][yPos].open(aim)
+        return True
 
-        cl = self.cellList
+        # TODO: Clean up
+
         try:
             if aim == Aim.Up:
                 cl[xPos][yPos - 1].open(aim)

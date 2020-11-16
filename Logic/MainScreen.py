@@ -22,6 +22,7 @@ class MainScreen:
         return
 
     def Tick(self):
+        self.mazeGen.NextStep()
         screenX, screenY = self.mainScreen.get_size()
         self.mainScreen.blit(self.maze.draw(),
                              (int(screenX * 0.05), int(screenY * 0.05)))

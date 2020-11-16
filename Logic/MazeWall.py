@@ -11,10 +11,13 @@ class MazeWall:
         self.endPos = endPos
         self.isEdge = isEdge
         self.isOpen = False
-        # self.color = MazeWall.WALL_COLOR
 
     def open(self):
+        if self.isEdge:
+            print("Open edge!!")
+
         self.isOpen = True
+        return True
 
     def close(self):
         self.isOpen = False

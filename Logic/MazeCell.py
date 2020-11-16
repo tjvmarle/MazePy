@@ -27,7 +27,8 @@ class MazeCell:
 
     def open(self, aim):
         if self.walls[aim] is not None:
-            self.walls[aim].open()
+            return self.walls[aim].open()
+        return False
 
     def draw(self, surface):
         # Only draw right/bottom, only if not edge
