@@ -25,15 +25,12 @@ class MazeGen:
         self.currWalk = [maze.startEnd[0]]
 
     def NextStep(self):
-
         if not self.currWalk:
             # Maze generation finished
             return
 
         # TODO:
-        # * Still bit buggy
-        # ** Opens up edges, should not be possible
-        # ** Doesn't seem to open up every wall
+        # * Add a bit more branching. Has tendency to create long corridors.
         aimList = [aim for aim in Aim]
         shuffle(aimList)
 
@@ -44,19 +41,27 @@ class MazeGen:
 
             # Cell/direction has to be within bounds and unvisited
             if nextPos in self.visited.keys() and not self.visited[nextPos]:
-
-                print("Opening from: ", self.currPos, " towards: ", aim)
+                if self.currPos != self.currWalk[-1]:
+                    self.currWalk.append(self.currPos)
+                
                 self.mazeRef.open(self.currPos, aim)
                 self.currPos = nextPos
                 self.currWalk.append(nextPos)
                 self.visited[nextPos] = True
                 moved = True
 
+        #Possibly temporary - shows the solution
+        if moved:
+            dWall = self.mazeRef.cellList[self.currPos[0]][self.currPos[1]].walls[Aim.Down]
+            if dWall.isEdge and dWall.isOpen:
+                for cellPos in self.currWalk:
+                    self.mazeRef.drawCell(cellPos, (153, 204, 153))
+
         if not moved:
             # All neigbors already visited. Backtrack and try again
             self.currPos = self.currWalk.pop()
             self.NextStep()
 
-        # time.sleep(0.1)
-
+    def clr(self, pos, color):
+        self.mazeRef.drawCell(pos, color)
         pass

@@ -1,5 +1,6 @@
 # from Logic.Maze import Maze
 import pygame
+import time
 
 
 class MazeWall:

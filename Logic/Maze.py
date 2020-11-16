@@ -39,9 +39,9 @@ class Maze:
 
                 # Only set right/bottom neighbours, should cover all cells
                 if setRight:
+                    cell.addWall(Aim.Right)
                     cellList[cell_x +
                              1][cell_y].walls[Aim.Left] = cell.walls[Aim.Right]
-                    cell.addWall(Aim.Right)
 
                 if setBot:
                     cell.addWall(Aim.Down)
@@ -90,27 +90,31 @@ class Maze:
 
         # TODO: Clean up
 
-        try:
-            if aim == Aim.Up:
-                cl[xPos][yPos - 1].open(aim)
+        # try:
+        #     if aim == Aim.Up:
+        #         cl[xPos][yPos - 1].open(aim)
 
-            elif aim == Aim.Right:
-                cl[xPos + 1][yPos].open(aim)
+        #     elif aim == Aim.Right:
+        #         cl[xPos + 1][yPos].open(aim)
 
-            elif aim == Aim.Down:
-                cl[xPos][yPos + 1].open(aim)
+        #     elif aim == Aim.Down:
+        #         cl[xPos][yPos + 1].open(aim)
 
-            elif aim == Aim.Left:
-                cl[xPos - 1][yPos].open(aim)
+        #     elif aim == Aim.Left:
+        #         cl[xPos - 1][yPos].open(aim)
 
-            else:
-                return False
+        #     else:
+        #         return False
 
-        except IndexError:
-            return False
+        # except IndexError:
+        #     return False
 
-        return True
+        # return True
 
+    def drawCell(self, pos, color):
+        x, y = pos
+        self.cellList[x][y].drawCell(self.mazeScreen, color)
+    
     def draw(self):
         for col in self.cellList:
             for cell in col:

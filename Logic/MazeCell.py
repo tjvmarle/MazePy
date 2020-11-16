@@ -1,3 +1,4 @@
+import pygame
 from Logic.MazeWall import MazeWall
 from Logic.Move import Aim
 
@@ -11,10 +12,11 @@ class MazeCell:
                       Aim.Down: None, Aim.Left: None}
 
     def addWall(self, aim, isEdge=False):
-        # TODO Finetune the offset a bit --> currently generates 1 empty pixel in cell corners
-        x, y = self.abspos
-        xx = x + self.size - 2
-        yy = y + self.size - 2
+        # TODO Hard-draw the corner pixels
+        x = self.abspos[0]
+        y = self.abspos[1]
+        xx = x + self.size - 1
+        yy = y + self.size - 1
 
         if aim == Aim.Up:
             self.walls[aim] = MazeWall((x, y), (xx, y), isEdge)
@@ -30,6 +32,12 @@ class MazeCell:
             return self.walls[aim].open()
         return False
 
+    def drawCell(self, surface, color):
+        x,y = self.abspos
+        margin = 8
+        rect = pygame.Rect((x + margin - 1, y + margin - 1), (self.size - 2 * margin, self.size - 2 * margin))
+        pygame.draw.rect(surface, color, rect)
+
     def draw(self, surface):
         # Only draw right/bottom, only if not edge
         if self.walls[Aim.Right] is not None:
@@ -42,3 +50,6 @@ class MazeCell:
         top = self.walls[Aim.Up]
         if top is not None and top.isEdge and top.isOpen:
             top.draw(surface)
+
+    def drawAim(self, surface, aim):
+        self.walls[aim].draw(surface)
